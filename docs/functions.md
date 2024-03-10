@@ -31,3 +31,86 @@
 Приложение: По достижении определенного счета или времени, увеличивает скорость движения змейки.  
 Пользователь: Замечает, что игра становится более динамичной и сложной.  
 Приложение: Поддерживает динамическую адаптацию сложности игры, ускоряя змейку по мере продвижения.
+
+
+### Диаграмма активности (Activity diagram)
+@startuml
+left to right direction
+actor Player as P
+rectangle Game {
+    usecase (Генерация яблок) as AppleGen
+    usecase (Генерация препятствий) as ObstacleGen
+    usecase (Завершить игру) as EndGame
+}
+rectangle "Управление змейкой" as ControlSnake
+rectangle "Обновление положения" as UpdatePosition
+rectangle "Обнаружение столкновений" as DetectCollisions
+rectangle "Съедение яблока" as EatApple
+rectangle "Увеличение счета" as IncreaseScore
+rectangle "Увеличение длины змейки" as IncreaseLength
+rectangle "Увеличение скорости" as IncreaseSpeed
+
+P --> ControlSnake
+ControlSnake --> UpdatePosition
+UpdatePosition --> DetectCollisions
+DetectCollisions --> EndGame : Столкновение с препятствием
+ControlSnake --> EatApple : Съедение яблока
+Game --> AppleGen : Генерация яблок
+AppleGen --> EatApple
+EatApple --> IncreaseScore : Увеличение счета
+IncreaseScore --> IncreaseLength : Увеличение длины змейки
+IncreaseLength --> IncreaseSpeed : Увеличение скорости
+Game --> ObstacleGen : Генерация препятствий
+ObstacleGen --> EndGame : Столкновение с препятствием
+@enduml
+
+
+### Управление змейкой:
+
+@startuml
+:Player начинает игру;
+while (Игра активна?) is (Да)
+    if (Пользователь нажал кнопку?) then (Да)
+        :Обработка ввода пользователя;
+        if (Новое направление) then (Да)
+            :Изменение направления змейки;
+        endif
+    else (Нет)
+        :Продолжение движения по текущему направлению;
+    endif
+endwhile (Нет)
+:Игра завершена;
+@enduml
+
+### Обнаружение столкновений:
+@startuml
+:Змейка движется;
+while (Игра активна?) is (Да)
+    :Обновление положения змейки;
+    if (Змейка столкнулась со стеной или собой?) then (Да)
+        :Завершить игру;
+    else (Нет)
+        :Продолжить игру;
+    endif
+endwhile (Нет)
+:Игра завершена;
+@enduml
+
+Съедание яблока:
+@startuml
+:Змейка движется;
+while (Игра активна?) is (Да)
+    :Обновление положения змейки;
+    if (Змейка съела яблоко?) then (Да)
+        :Увеличение длины змейки;
+        :Увеличение счета;
+        if (Достигнут новый рекорд?) then (Да)
+            :Обновление рекорда;
+        endif
+        :Генерация нового яблока;
+    else (Нет)
+        :Продолжить игру;
+    endif
+endwhile (Нет)
+:Игра завершена;
+@enduml
