@@ -1,0 +1,51 @@
+@startuml
+
+class SnakeGame {
+    - WIDTH: int
+    - HEIGHT: int
+    - snake: Snake
+    - apple: Apple
+    - obstacles: List<Obstacle>
+    - score: int
+    - high_score: int
+    - game_over: bool
+    + init()
+    + start_game(): void
+    + update(): void
+    + handle_input(): void
+    + generate_apple(): void
+    + generate_obstacles(): void
+    + check_collisions(): void
+    + increase_score(): void
+    + increase_speed(): void
+}
+
+class Snake {
+    - segments: List<Point>
+    - direction: str
+    + init()
+    + move(): void
+    + grow(): void
+    + draw(): void
+}
+
+class Apple {
+    - position: Point
+    + init()
+    + draw(): void
+}
+
+class Obstacle {
+    - position: Point
+    + init()
+    + draw(): void
+}
+
+SnakeGame -- Snake: contains >
+SnakeGame -- Apple: contains >
+SnakeGame -- Obstacle: contains >
+
+Snake -- Apple: eats >
+Snake -- Obstacle: collides with >
+
+@enduml

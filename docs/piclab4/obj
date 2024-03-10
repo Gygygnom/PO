@@ -1,0 +1,32 @@
+@startuml
+
+object SnakeGame {
+    WIDTH: int = 20
+    HEIGHT: int = 20
+    snake: Snake
+    apple: Apple
+    obstacles: List<Obstacle>
+    score: int = 0
+    high_score: int = 0
+    game_over: bool = false
+}
+
+object Snake {
+    segments: List<Point>
+    direction: str
+}
+
+object Apple {
+    position: Point
+}
+
+object Obstacle {
+    position: Point
+}
+
+class Point {
+    x: int
+    y: int
+}
+
+@enduml
