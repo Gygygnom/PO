@@ -46,3 +46,6 @@
 
 
 [Ссылка на functions.md](https://github.com/Gygygnom/PO/blob/master/docs/functions.md)
+
+
+[Ссылка на описание стурктурных моделей](https://github.com/Gygygnom/PO/blob/master/docs/struct.md)
