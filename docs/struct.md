@@ -1,11 +1,11 @@
 ### Структурные модели
 Для описания внутренней структуры приложения с помощью диаграммы классов, я предлагаю следующую детализацию на основе функциональных возможностей:
 
-[Код диаграммы](docs/piclab4/structur)
+[Код диаграммы](piclab4/structur)
 ![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/TP7TYi8m48Nl-nJp2E9bMCK5nGg2Wi9UbhJErcYQAPcuh8ZlxZHfmLqqDpFpSSxya1a7xSEbiLb6vGch03kdpxZK3S8j0tbVg_a-Ls1SW0cCHv7bYzKot_-3t1bLyaUWszOA-En215JAjCeYArWR3X-RlfucVqKUXvwfvT7Kn-85hsMzWdxGAoY9hF1lRHcp-zyh-WiOwmPT6APkILgbaGVZHMp8AU3Wd-nnvzxU4fkaYSudrR3_Us5bDNCgUz5ll2IcrvIAR8Rk87_m0000)
 
 ### Диаграмма объектов (Object Diagram)
-[Код диаграммы](docs/piclab4/obj)
+[Код диаграммы](piclab4/obj)
 ![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/fLFBQiCm4BpxAtHCAFu1KK82BN4Wq483FGf5MkmbicGaEJwK_dlbPssbFjKNuvcTVSokzyvpw-jI9ObGt3doeVaDZhm4yfMGyAJay_HooIX1xGSWUpqTiyiSSQs8zje1ubMb0dHeNmDahg6OKE0eEQFpps_3zsxC8eo5UTe2yu8ze7beZfaxM4gkngWEVIACeKRFs6Ox0DrWh0tUR2cv6vG3KLUI-nWik9OAGewgzX6LWmOR5AmRQOsSXei2H07YneHH2XqQ7TEeXGNke1zpbQm0v4H-BtOrxSb1NeBsexll9bWsMYlHWl2XFWs-s3NBok1gF9yrJGH9ovl7Nhf5JxrKnc5VhcjZhU3VgSQx-6-strDEqzuhIeJHdgDsPBUa3_svhj5ZIuk8FcIc1kudPQmA-vVWI8E-QALxq3ByTJy0)
 
 
