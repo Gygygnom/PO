@@ -1,91 +1,13 @@
 ### Структурные модели
 Для описания внутренней структуры приложения с помощью диаграммы классов, я предлагаю следующую детализацию на основе функциональных возможностей:
-@startuml
 
-class SnakeGame {
-    - WIDTH: int
-    - HEIGHT: int
-    - snake: Snake
-    - apple: Apple
-    - obstacles: List<Obstacle>
-    - score: int
-    - high_score: int
-    - game_over: bool
-    + init()
-    + start_game(): void
-    + update(): void
-    + handle_input(): void
-    + generate_apple(): void
-    + generate_obstacles(): void
-    + check_collisions(): void
-    + increase_score(): void
-    + increase_speed(): void
-}
-
-class Snake {
-    - segments: List<Point>
-    - direction: str
-    + init()
-    + move(): void
-    + grow(): void
-    + draw(): void
-}
-
-class Apple {
-    - position: Point
-    + init()
-    + draw(): void
-}
-
-class Obstacle {
-    - position: Point
-    + init()
-    + draw(): void
-}
-
-SnakeGame -- Snake: contains >
-SnakeGame -- Apple: contains >
-SnakeGame -- Obstacle: contains >
-
-Snake -- Apple: eats >
-Snake -- Obstacle: collides with >
-
-@enduml
+[Код диаграммы](docs/piclab4/structur)
+![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/TP7TYi8m48Nl-nJp2E9bMCK5nGg2Wi9UbhJErcYQAPcuh8ZlxZHfmLqqDpFpSSxya1a7xSEbiLb6vGch03kdpxZK3S8j0tbVg_a-Ls1SW0cCHv7bYzKot_-3t1bLyaUWszOA-En215JAjCeYArWR3X-RlfucVqKUXvwfvT7Kn-85hsMzWdxGAoY9hF1lRHcp-zyh-WiOwmPT6APkILgbaGVZHMp8AU3Wd-nnvzxU4fkaYSudrR3_Us5bDNCgUz5ll2IcrvIAR8Rk87_m0000)
 
 ### Диаграмма объектов (Object Diagram)
+[Код диаграммы](docs/piclab4/obj)
+![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/fLFBQiCm4BpxAtHCAFu1KK82BN4Wq483FGf5MkmbicGaEJwK_dlbPssbFjKNuvcTVSokzyvpw-jI9ObGt3doeVaDZhm4yfMGyAJay_HooIX1xGSWUpqTiyiSSQs8zje1ubMb0dHeNmDahg6OKE0eEQFpps_3zsxC8eo5UTe2yu8ze7beZfaxM4gkngWEVIACeKRFs6Ox0DrWh0tUR2cv6vG3KLUI-nWik9OAGewgzX6LWmOR5AmRQOsSXei2H07YneHH2XqQ7TEeXGNke1zpbQm0v4H-BtOrxSb1NeBsexll9bWsMYlHWl2XFWs-s3NBok1gF9yrJGH9ovl7Nhf5JxrKnc5VhcjZhU3VgSQx-6-strDEqzuhIeJHdgDsPBUa3_svhj5ZIuk8FcIc1kudPQmA-vVWI8E-QALxq3ByTJy0)
 
-@startuml
-
-object SnakeGame {
-    WIDTH: int = 20
-    HEIGHT: int = 20
-    snake: Snake
-    apple: Apple
-    obstacles: List<Obstacle>
-    score: int = 0
-    high_score: int = 0
-    game_over: bool = false
-}
-
-object Snake {
-    segments: List<Point>
-    direction: str
-}
-
-object Apple {
-    position: Point
-}
-
-object Obstacle {
-    position: Point
-}
-
-class Point {
-    x: int
-    y: int
-}
-
-@enduml
 
 ### Диаграмма классов (Class Diagram)
 Диаграмма классов представляет внутреннюю структуру приложения "Змейка" и описывает классы, их атрибуты и методы, а также взаимосвязи между ними.
