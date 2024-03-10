@@ -45,4 +45,4 @@
 При отрисовке игрового поля учитывайте координаты всех препятствий и отображайте их на экране, представляя их, например, как стены или блоки.
 
 
-[Сслылка на functions.md](../PO/docs/functions.md)
+[Ссылка на functions.md](https://github.com/Gygygnom/PO/blob/master/docs/functions.md)
