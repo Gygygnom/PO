@@ -1,0 +1,12 @@
+@startuml
+
+[*] --> DetectFood
+
+state DetectFood {
+    [*] --> CheckFoodCollision: detectFood()
+    CheckFoodCollision --> EatFood: foodDetected
+    EatFood --> IncreaseScore: foodEaten
+    IncreaseScore --> [*]
+}
+
+@enduml

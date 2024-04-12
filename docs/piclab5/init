@@ -1,0 +1,21 @@
+@startuml
+
+[*] --> InitSnake
+
+state InitSnake {
+    [*] --> SetInitialPosition
+    SetInitialPosition --> SetDirection: setPosition()
+    SetDirection --> CreateSegments: setDirection()
+    CreateSegments --> Ready: createSegments()
+}
+
+state Ready {
+    [*] --> Inactive
+    Inactive --> Active: start()
+}
+
+state Active {
+    [*] --> Inactive: end()
+}
+
+@enduml
