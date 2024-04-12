@@ -1,0 +1,27 @@
+@startuml
+title Обнаружение съедания еды
+
+actor Игрок as Player
+participant "Змейка" as Snake
+participant "Яблоко" as Apple
+participant "Игровой объект" as GameObject
+
+activate Player
+Player -> Snake: Проверка съедания яблока
+activate Snake
+Snake -> GameObject: Получение координат яблока
+activate GameObject
+alt Яблоко съедено
+    GameObject --> Snake: Яблоко съедено
+    Snake -> Snake: Увеличение длины
+    Snake -> GameObject: Увеличение счета
+    Snake -> GameObject: Генерация нового яблока
+else Яблоко не съедено
+    GameObject --> Snake: Яблоко не съедено
+    Snake -> GameObject: Продолжение игры
+end
+
+deactivate GameObject
+deactivate Snake
+deactivate Player
+@enduml
