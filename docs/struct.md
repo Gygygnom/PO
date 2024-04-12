@@ -1,33 +1,36 @@
 ### Структурные модели
-Для описания внутренней структуры приложения с помощью диаграммы классов, я предлагаю следующую детализацию на основе функциональных возможностей:
-
-[Код диаграммы](piclab4/structur)
-![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/jLJBQiCm4BpdAtIqQV83feI45jf28OKSUZIAjDXBPCb8Sj9I-k-Lv4Si9UsjFjXeTcSqkojvOopLjcl4Oi44DORi9Jt24ss0V2s8UrQaSejtvBOk24ex0vy1gzhEKUF9HQynGBHjXOEs_ZD0wk0sPG9CGLxHsFlTi5wFAanfcClMRfzz2de7knFeWXoK4W6y8sM94crPPh7fPUet7_93zRxQB2_8II4VyAxbrAPWJIKNy2BRpcRetuNZwpYd0WdQKKEzsUtOMA_9PDViBitmlY82gu4T7vGGQ519ayYXP1geWT2Ph5MEVajaIci1-2Jn7SrxchM1ge6W4oRpvaN7iN3KmAmp4ifE6nuwkRz5N_PTVepeum0QTRfgarRd1EAQdg-jXnvFrbjbi9SFswR-ad3-f_8ub7yH3ocJyiVyJ7_s2vTwkOQhLJ-ZWZ0bBKLfo3eER_ihzbjuB2RAw5DcRA1sOgOiTm0v6796Mtlg1YJtVumV)
-
-### Диаграмма объектов (Object Diagram)
-[Код диаграммы](piclab4/obj)
-![Диаграмма структурных моделей](https://www.planttext.com/api/plantuml/png/TL9DIyGm5BpdLuGzjT05swEWh23eRHUAU10FsVRPHjEaDD7THVpllkQZROhsbCwRcSmyijE63UQp4uIeupjKXfQIVS03wu1-4ufVWyTdNfkMtj3YQe8UWJUjcJ4zol1NmibP9DQvXAO3QNH6xUyz7_0EhcHgHQplHH3TZUUaLvhFStL4LIL08-Tb9EqzCF7oDAD_3ehqrUMgr31UuLAs6BgCaB7B_Wi61DwOq41-uatuBMZV8mGvA2vDSiupUWaHF5GW52wlGrsKRPuEcuMvhUlDGsQ_2M-4Fkb241gkD7aiSe4YHX4pNBw5iSMzwtdQoyMUa3M_X-tsrk_acbPA6iQbNerTgt_7KuSr8n83Cqiu4Wd1QtmE9svQGdOWw_7f_W80)
 
 
-### Диаграмма классов (Class Diagram)
-Диаграмма классов представляет внутреннюю структуру приложения "Змейка" и описывает классы, их атрибуты и методы, а также взаимосвязи между ними.
+## Описание внутренней структуры приложения
 
-## Описание содержания:
-SnakeGame: Класс, представляющий игру "Змейка". Содержит атрибуты для хранения размеров игрового поля, змейки, яблока, препятствий, счета, рекордного счета и флага завершения игры. Также включает методы для инициализации игры, запуска, обновления, обработки ввода, генерации объектов, проверки столкновений и управления игровым процессом.
-Snake: Класс, представляющий змейку в игре. Содержит атрибуты для хранения сегментов змейки и текущего направления движения, а также методы для движения, увеличения длины и отрисовки.
-Apple: Класс, представляющий яблоко на игровом поле. Содержит атрибут для хранения позиции яблока и метод для отрисовки.
-Obstacle: Класс, представляющий препятствие на игровом поле. Содержит атрибут для хранения позиции препятствия и метод для отрисовки.
-## Связи:
+[Код диаграммы](piclab4/activity)
+![Внутр структ](https://www.planttext.com/api/plantuml/png/fLJBRkCW5DtxAr1NpZJ-0Qkg-f0wCwjKwg9B2vjRcmQ31RZfO-RV1mm4x7JQHiqY4kS-pdqStmkbiTHZpxAiOLWfT2ier-WjG-PNeESIcQT_lCJ7gVFBdNtjJQliRqZp4_UmgH-XYRa6eQYcWfSkrkU9Zld2OUKzYCIxN8to0JUmHZKJpRPIz1KIjijXOF09qUJp3OvDRKRLV4eJtBx1T2Nw-aEMmiHXfIk92HrLkY9u7fWWG4fK2y5IK9aS5UQqnovRhDZIBQjT7pA41Zn5VaH3TnnluzmKj3rmRR8oglJPn7VkROHAeuIf3gMbPvZ2yqcerRl1Q-ICy-XGO2-U88zrUSMsHdVLZXBTfK07jEtqhDzMYjqo_DZUhSZt_LkY-prn0lwAv65KDhXqEJo4hOnBfsOF2I-vC9GWmJ3KsYmusEoo0wuQ8M5PnEO9v4mz3uARccx4NY_xZl8lpt1QpnGIa74WMCTdqq6plHRCr6ZMTqzr5vfG1nzIKjqfwZ0d37xpOTGvjV-prRV0GHeUz-slqh4jETLCq7TsD66pgS6TAlNVfRlpMHJdwEJ7INBSikGWdlqf2b_94WrT7nZitWv0fukeC4lhiEm2EB5N_Hy0)
 
-Связь "contains" отражает, что класс SnakeGame содержит объекты Snake, Apple и Obstacle.
-Связь "eats" отображает, что змейка взаимодействует с яблоком.
-Связь "collides with" показывает, что змейка может столкнуться с препятствием.
-### Диаграмма объектов (Object Diagram)
-Диаграмма объектов отображает конкретные экземпляры объектов данных в приложении "Змейка".
+## Описание используемых структур/объектов данных
 
-## Описание содержания:
-SnakeGame: Объект, представляющий текущую игровую сессию. Содержит атрибуты для хранения размеров игрового поля, объектов змейки, яблока, препятствий, счета, рекордного счета и флага завершения игры.
-Snake: Объект, представляющий змейку в игре. Содержит список сегментов змейки и текущее направление движения.
-Apple: Объект, представляющий яблоко на игровом поле. Содержит позицию на поле.
-Obstacle: Объект, представляющий препятствие на игровом поле. Содержит позицию на поле.
-Point: Класс, представляющий точку на игровом поле с координатами x и y.
+[Код диаграммы](piclab4/activity)
+[Объект](https://www.planttext.com/api/plantuml/png/bLF1JiCm3BttAwAU0AdJk5OC3Gx0RPCcn06XAMsyDY9DgZg38SI_upHfoxeYGGzjakTd-_cbIxIyiVjAHL6kE29R6waj-umOFGaxfCnj5smU3Zw6Ww-ESbFN2dfARL1QQNGQKYsOXdU_FZiVIAkCAkV_vzsQAliZnyTaHBFRXWkvnx4QEDJA210founH1EouGlW98cNVSYqhxkkSYDze_Zg8G2Wgq9OAAOdsgktacWZFBo50o0PodmfjGqZyk8v7sUvvDMGiQFCaXIt7lJlW0MHHsZ62BaaQElCZQTVzIBWpB0s--O1stGUOO4wdepFhI4f6JdG1pfKZ47FJmBYnahhTJ05Eo-eDcaaVTaQJn3jwkpbvLV5bp9Aa_VGZYxoUIQY_RV5yDhkO26YlrMzWj0Gjt3_o3G00)
+
+## Внутренняя структура приложения:
+# Приложение "Змейка" состоит из нескольких основных компонентов:
+
+SnakeGame: Этот класс представляет основное состояние игры, включая размер игрового поля, объекты змейки, яблока, препятствий, бомб, текущий счет, рекордный счет, флаг окончания игры и объект шрифта.
+
+Snake: Этот класс представляет змейку на игровом поле. Он содержит список сегментов, образующих тело змейки, а также текущее направление движения.
+
+Point: Представляет точку на игровом поле с координатами x и y.
+
+Apple: Представляет яблоко на игровом поле. Оно имеет позицию, представленную объектом Point.
+
+Obstacle: Представляет препятствие на игровом поле. Оно также имеет позицию, представленную объектом Point.
+
+Bomb: Представляет бомбу на игровом поле. Она имеет позицию, радиус взрыва, флаг взрыва и анимацию взрыва.
+
+# Используемые структуры/объекты данных:
+
+Point: Точка на игровом поле с координатами x и y.
+Apple: Яблоко на игровом поле с позицией, представленной объектом Point.
+Obstacle: Препятствие на игровом поле с позицией, также представленной объектом Point.
+Bomb: Бомба на игровом поле с позицией, радиусом взрыва, флагом взрыва и анимацией взрыва.
+Snake: Змейка на игровом поле с сегментами, образующими ее тело, и текущим направлением движения.
+SnakeGame: Состояние игры, включающее размер игрового поля, объекты змейки, яблока, препятствий, бомб, текущий счет, рекордный счет, флаг окончания игры и объект шрифта.
