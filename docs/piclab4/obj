@@ -1,32 +1,39 @@
 @startuml
 
 object SnakeGame {
-    WIDTH: int = 20
-    HEIGHT: int = 20
-    snake: Snake
-    apple: Apple
-    obstacles: List<Obstacle>
-    score: int = 0
-    high_score: int = 0
-    game_over: bool = false
+    gameWidth = 20
+    gameHeight = 20
+    snake = new Snake(startSegments, startDirection)
+    apple = new Apple(position)
+    obstacles = [new Obstacle(position1), new Obstacle(position2)]
+    score = 0
+    highScore = 0
+    gameOver = false
 }
 
 object Snake {
-    segments: List<Point>
-    direction: str
+    segments = [new Point(x1, y1), new Point(x2, y2)]
+    direction = "UP"
 }
 
 object Apple {
-    position: Point
+    position = new Point(x, y)
 }
 
 object Obstacle {
-    position: Point
+    position1 = new Point(x1, y1)
+    position2 = new Point(x2, y2)
 }
 
-class Point {
-    x: int
-    y: int
+object Point {
+    x = 0
+    y = 0
 }
+
+SnakeGame --> Snake : contains
+SnakeGame --> Apple : contains
+SnakeGame --> Obstacle : contains
+Snake --> Apple : eats
+Snake --> Obstacle : collides with
 
 @enduml

@@ -1,29 +1,29 @@
 @startuml
 
 class SnakeGame {
-    - WIDTH: int
-    - HEIGHT: int
+    - gameWidth: int
+    - gameHeight: int
     - snake: Snake
     - apple: Apple
     - obstacles: List<Obstacle>
     - score: int
-    - high_score: int
-    - game_over: bool
-    + init()
-    + start_game(): void
+    - highScore: int
+    - gameOver: bool
+    + init(gameWidth: int, gameHeight: int)
+    + startGame(): void
     + update(): void
-    + handle_input(): void
-    + generate_apple(): void
-    + generate_obstacles(): void
-    + check_collisions(): void
-    + increase_score(): void
-    + increase_speed(): void
+    + handleInput(input: str): void
+    + generateApple(): void
+    + generateObstacles(numObstacles: int): void
+    + checkCollisions(): void
+    + increaseScore(points: int): void
+    + increaseSpeed(): void
 }
 
 class Snake {
     - segments: List<Point>
     - direction: str
-    + init()
+    + init(startSegments: List<Point>, startDirection: str)
     + move(): void
     + grow(): void
     + draw(): void
@@ -31,14 +31,19 @@ class Snake {
 
 class Apple {
     - position: Point
-    + init()
+    + init(position: Point)
     + draw(): void
 }
 
 class Obstacle {
     - position: Point
-    + init()
+    + init(position: Point)
     + draw(): void
+}
+
+class Point {
+    - x: int
+    - y: int
 }
 
 SnakeGame -- Snake: contains >
