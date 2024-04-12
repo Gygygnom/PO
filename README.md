@@ -49,3 +49,4 @@
 
 
 [Ссылка на описание стурктурных моделей](https://github.com/Gygygnom/PO/blob/master/docs/struct.md)
+[Ссылка на описание поведенческих моделей](https://github.com/Gygygnom/PO/blob/master/docs/behavior.md)
