@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Player as P
+rectangle "Snake Game" {
+    usecase (Начать новую игру) as UC1
+    usecase (Управлять змейкой) as UC2
+    usecase (Съесть яблоко) as UC3
+    usecase (Приблизиться к яблоку) as UC4
+    usecase (Отклониться от препятствия) as UC5
+    usecase (Избежать столкновения с бомбой) as UC6
+    usecase (Взорваться от бомбы) as UC7
+    usecase (Завершить игру) as UC8
+
+    P --> UC1 : Запускает новую игру
+    P --> UC2 : Управляет змейкой стрелками клавиатуры
+    UC2 --> UC3 : Змейка достигает яблока
+    UC2 --> UC4 : Змейка движется в направлении яблока
+    UC2 --> UC5 : Змейка приближается к препятствию
+    UC2 --> UC6 : Змейка приближается к бомбе
+    UC6 --> UC7 : Бомба взрывается рядом с змейкой
+    UC4 --> UC8 : Змейка сталкивается с препятствием
+    UC7 --> UC8 : Змейка взрывается от бомбы
+}
+@enduml
