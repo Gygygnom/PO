@@ -19,14 +19,6 @@ def test_snake_move():
     assert snake.segments[0].x == 10
     assert snake.segments[0].y == 0  # Verify head moved up
 
-@pytest.mark.skip(reason="UI element test")
-def test_snake_draw(surface):
-    snake = Snake([Point(10, 10)], "UP")
-    block_size = 10
-    pygame.draw.rect = mock.MagicMock()
-    snake.draw(surface, block_size)
-    pygame.draw.rect.assert_called_once_with(surface, (0, 255, 0), [10, 10, block_size, block_size])
-
 def test_snake_game_init(game):
     assert game.gameWidth == 600
     assert game.gameHeight == 400
@@ -52,27 +44,6 @@ def test_snake_game_check_collisions(game):
     game.obstacles.append(Obstacle(Point(10, 10)))
     game.checkCollisions()
     assert game.gameOver
-
-@pytest.mark.skip(reason="UI element test")
-def test_snake_game_draw_score(game, surface):
-    pygame.font.Font.render = mock.MagicMock()
-    game.drawScore(surface)
-    pygame.font.Font.render.assert_called_once()
-
-@pytest.mark.skip(reason="UI element test")
-def test_snake_game_draw_objects(game, surface):
-    block_size = 10
-    game.snake.draw = mock.MagicMock()
-    game.apple.draw = mock.MagicMock()
-    game.obstacles.append(Obstacle(Point(10, 10)))
-    game.bombs.append(Bomb(Point(20, 20), 3))
-    game.drawObjects(surface, block_size)
-    game.snake.draw.assert_called_once()
-    game.apple.draw.assert_called_once()
-    for obstacle in game.obstacles:
-        obstacle.draw.assert_called_once()
-    for bomb in game.bombs:
-        bomb.draw.assert_called_once()
 
 def test_snake_game_check_collision_with_obstacles(game):
     position = Point(10, 10)
