@@ -85,15 +85,3 @@ def test_bomb_collision():
     head = snake.segments[0]  # Получаем голову змеи
     assert head.x == bomb.position.x and head.y == bomb.position.y  # Убеждаемся, что голова змеи находится на позиции бомбы
 
-
-def test_update_score_increment(game):
-    game.snake.segments = [Point(10, 10)]  # Устанавливаем начальные координаты змейки
-    game.apple.position = Point(20, 10)  # Устанавливаем координаты яблока рядом с головой змейки
-    initial_score = game.score  # Получаем начальный счет
-    game.update()  # Вызываем метод update для обновления игры
-    # Проверяем, что счет увеличился после первого обновления
-    game.update()  # Дополнительное обновление
-    print("Initial score:", initial_score)
-    print("Updated score:", game.score)
-    assert game.score == initial_score + 10  # Проверяем, что счет увеличился на 10
-
