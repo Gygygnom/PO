@@ -1,5 +1,6 @@
 from unittest import mock
-
+from unittest.mock import patch
+import unittest
 import pytest
 import pygame
 from game import SnakeGame
@@ -12,6 +13,12 @@ def game():
     game_instance = SnakeGame(600, 400)
     yield game_instance
     pygame.quit()  # Завершение работы Pygame после тестов
+
+@pytest.fixture(autouse=True)
+def init_pygame():
+    pygame.init()
+    yield
+    pygame.quit()
 
 def test_snake_move():
     snake = Snake([Point(10, 10)], "UP")
@@ -59,3 +66,34 @@ def test_snake_game_handle_input(game):
 def test_snake_game_generate_apple(game):
     apple = game.generateApple()
     assert not game.checkCollisionWithObstacles(apple.position)
+
+import pytest
+from game import Snake, Bomb, Point
+
+
+def test_bomb_collision():
+    # Создаем объект змеи
+    snake_segments = [Point(10, 10), Point(20, 10), Point(30, 10), Point(40, 10)]
+    snake = Snake(snake_segments, "RIGHT")
+
+    # Создаем объект бомбы
+    bomb_position = Point(10, 10)
+    bomb = Bomb(bomb_position)
+
+    # Проверяем коллизию змеи с бомбой
+    assert not bomb.exploded  # Убеждаемся, что бомба еще не взорвалась
+    head = snake.segments[0]  # Получаем голову змеи
+    assert head.x == bomb.position.x and head.y == bomb.position.y  # Убеждаемся, что голова змеи находится на позиции бомбы
+
+
+def test_update_score_increment(game):
+    game.snake.segments = [Point(10, 10)]  # Устанавливаем начальные координаты змейки
+    game.apple.position = Point(20, 10)  # Устанавливаем координаты яблока рядом с головой змейки
+    initial_score = game.score  # Получаем начальный счет
+    game.update()  # Вызываем метод update для обновления игры
+    # Проверяем, что счет увеличился после первого обновления
+    game.update()  # Дополнительное обновление
+    print("Initial score:", initial_score)
+    print("Updated score:", game.score)
+    assert game.score == initial_score + 10  # Проверяем, что счет увеличился на 10
+
