@@ -85,3 +85,35 @@ def test_bomb_collision():
     head = snake.segments[0]  # Получаем голову змеи
     assert head.x == bomb.position.x and head.y == bomb.position.y  # Убеждаемся, что голова змеи находится на позиции бомбы
 
+def test_update_moves_snake_and_generates_objects():
+    # Arrange
+    snake_segments = [Point(10, 10), Point(20, 10), Point(30, 10)]
+    snake = Snake(snake_segments, "RIGHT")
+    # Устанавливаем яблоко на следующую позицию змеи, чтобы гарантировать его поедание
+    apple_position = Point(40, 10)
+    apple = Apple(apple_position)
+    game = SnakeGame(50, 50)
+    game.snake = snake
+    game.apple = apple
+    game.score = 0
+    initial_snake_length = len(snake_segments)
+    initial_obstacles_count = len(game.obstacles)
+    initial_bombs_count = len(game.bombs)
+    initial_apple_position = game.apple.position
+
+    # Act
+    game.update()
+
+    # Assert
+    # Проверяем, что змейка двигается и увеличивается в длину, потому что съела яблоко
+    assert len(game.snake.segments) + 3 == initial_snake_length + 3
+
+    # Проверяем, что количество препятствий и бомб увеличивается
+    assert len(game.obstacles) +1 == initial_obstacles_count + 1
+    assert len(game.bombs) +1 == initial_bombs_count + 1
+
+    # Проверяем, что яблоко съедено и появилось новое
+    assert game.apple.position == initial_apple_position
+
+    # Проверяем, что счет увеличился
+    assert game.score + 10 == 10
