@@ -431,7 +431,7 @@ def test_snake_check_collisions_with_boundaries(game):
                0].x == game.gameWidth - 10
 
     # Проверка перехода через правую границу
-    game.snake.segments = [Point(game.gameWidth, 100)]  # Начальная позиция за правой границей
+    game.snake.segments = [Point(game.gameWidth, 100)]  # Начальная позиция . за правой границей
     game.checkCollisions()
     assert game.snake.segments[0].x == 0
 
@@ -444,4 +444,4 @@ def test_snake_check_collisions_with_boundaries(game):
     # Проверка перехода через нижнюю границу
     game.snake.segments = [Point(100, game.gameHeight)]  # Начальная позиция за нижней границей
     game.checkCollisions()
-    assert game.snake.segments[0].y == 0
+    assert game.snake.segments[0].y == 0 
