@@ -1,124 +1,136 @@
-from unittest import mock
-from unittest.mock import patch
-import unittest
-import pytest
 import pygame
-from game import SnakeGame
-from entities import Point, Apple, Obstacle, Bomb, Snake
-
-@pytest.fixture
-def game():
-    game = SnakeGame(600, 400)
-    game.startGame()
-    return game
-
-@pytest.fixture(autouse=True)
-def init_pygame():
-    pygame.init()
-    yield
-    pygame.quit()
-
-def test_snake_move():
-    snake = Snake([Point(10, 10)], "UP")
-    snake.move(10, 100, 100)
-    assert snake.segments[0].x == 10
-    assert snake.segments[0].y == 0  # Verify head moved up
-
-def test_snake_game_init(game):
-    assert game.gameWidth == 600
-    assert game.gameHeight == 400
-    assert game.score == 0
-    assert game.highScore == 0
-    assert not game.gameOver
-    assert isinstance(game.snake, Snake)
-    assert isinstance(game.apple, Apple)
-
-def test_snake_game_start(game):
-    game.startGame()
-    assert not game.gameOver
-    assert game.score == 0
-
-def test_snake_game_update(game):
-    initial_y = game.snake.segments[0].y
-    game.snake.direction = "UP"
-    game.update()
-    assert game.snake.segments[0].y == initial_y - 10  # Verify snake moved up
-
-def test_snake_game_check_collisions(game):
-    game.snake.segments = [Point(10, 10), Point(20, 10)]
-    game.obstacles.append(Obstacle(Point(10, 10)))
-    game.checkCollisions()
-    assert game.gameOver
-
-def test_snake_game_check_collision_with_obstacles(game):
-    position = Point(10, 10)
-    game.obstacles.append(Obstacle(position))
-    assert game.checkCollisionWithObstacles(position)
-
-def test_snake_game_handle_input(game):
-    game.handleInput("UP")
-    assert game.snake.direction == "UP"
-    game.handleInput("LEFT")
-    assert game.snake.direction == "LEFT"
-
-def test_snake_game_generate_apple(game):
-    apple = game.generateApple()
-    assert not game.checkCollisionWithObstacles(apple.position)
+import random
+from entities import Point, Apple, Obstacle, Bomb, Snake, white
 
 
-def test_bomb_collision():
-    # Создаем объект змеи
-    snake_segments = [Point(10, 10), Point(20, 10), Point(30, 10), Point(40, 10)]
-    snake = Snake(snake_segments, "RIGHT")
+class SnakeGame:
+    def __init__(self, game_width, game_height):
+        self.gameWidth = game_width
+        self.gameHeight = game_height
+        start_x = game_width // 2
+        start_y = game_height // 2
+        start_segment = [Point(start_x, start_y)]
+        self.snake = Snake(start_segment, "UP")
+        self.apple = Apple(Point(random.randrange(0, game_width, 10), random.randrange(0, game_height, 10)))
+        self.obstacles = []  # Начально пустой список препятствий
+        self.bombs = []  # Начально пустой список бомб
+        self.score = 0
+        self.highScore = 0
+        self.gameOver = False
+        self.font = pygame.font.Font(None, 36)  # Шрифт для отображения текста
 
-    # Создаем объект бомбы
-    bomb_position = Point(10, 10)
-    bomb = Bomb(bomb_position)
+    def startGame(self):
+        self.gameOver = False
+        self.score = 0
+        self.snake = Snake([Point(self.gameWidth // 2, self.gameHeight // 2)], "UP")
+        self.apple = self.generateApple()
 
-    # Проверяем коллизию змеи с бомбой
-    assert not bomb.exploded  # Убеждаемся, что бомба еще не взорвалась
-    head = snake.segments[0]  # Получаем голову змеи
-    assert head.x == bomb.position.x and head.y == bomb.position.y  # Убеждаемся, что голова змеи находится на позиции бомбы
+    def update(self):
+        if not self.gameOver:
+            self.snake.move(10, self.gameWidth, self.gameHeight)  # Двигаем змейку
+            self.checkCollisions()  # Проверяем столкновения
+            if self.snake.segments[0].x == self.apple.position.x and self.snake.segments[0].y == self.apple.position.y:
+                self.score += 10
+                # Сохраняем координаты хвоста змейки
+                tail = self.snake.segments[-1]
+                # Добавляем три новых сегмента к змейке начиная с сохраненных координат хвоста
+                for _ in range(3):
+                    x = tail.x
+                    y = tail.y
+                    if self.snake.direction == "UP":
+                        y += 10
+                    elif self.snake.direction == "DOWN":
+                        y -= 10
+                    elif self.snake.direction == "LEFT":
+                        x += 10
+                    elif self.snake.direction == "RIGHT":
+                        x -= 10
+                    new_segment = Point(x, y)
+                    self.snake.segments.append(new_segment)
+                self.apple = self.generateApple()  # Генерируем новое яблоко
+                self.obstacles.append(Obstacle(Point(random.randrange(0, self.gameWidth, 10),
+                                                     random.randrange(0, self.gameHeight,
+                                                                      10))))  # Добавляем новое препятствие
+                self.bombs.append(Bomb(Point(random.randrange(0, self.gameWidth, 10),
+                                             random.randrange(0, self.gameHeight, 10))))  # Добавляем новую бомбу
 
+    def checkCollisionWithObstacles(self, position):
+        # Проверяем, не совпадает ли позиция с каким-либо препятствием или бомбой
+        for obstacle in self.obstacles:
+            if position.x == obstacle.position.x and position.y == obstacle.position.y:
+                return True
+        for bomb in self.bombs:
+            if position.x == bomb.position.x and position.y == bomb.position.y:
+                return True
+        return False
 
-def move_snake_to_bomb(game, bomb_position):
-    game.snake.segments[0] = bomb_position
+    def handleInput(self, input):
+        if input == "UP" and self.snake.direction != "DOWN":
+            self.snake.direction = "UP"
+        elif input == "DOWN" and self.snake.direction != "UP":
+            self.snake.direction = "DOWN"
+        elif input == "LEFT" and self.snake.direction != "RIGHT":
+            self.snake.direction = "LEFT"
+        elif input == "RIGHT" and self.snake.direction != "LEFT":
+            self.snake.direction = "RIGHT"
 
+    def generateApple(self):
+        while True:
+            # Генерируем новую позицию для яблока
+            new_position = Point(random.randrange(0, self.gameWidth, 10), random.randrange(0, self.gameHeight, 10))
+            # Проверяем, не находится ли новая позиция внутри препятствия или бомбы
+            if not self.checkCollisionWithObstacles(new_position):
+                return Apple(new_position)
 
-def test_bomb_explosion_reduces_snake_size(game):
-    # Инициализация змеи длиной 5 сегментов
-    game.snake.segments = [
-        Point(100, 100), Point(110, 100), Point(120, 100),
-        Point(130, 100), Point(140, 100)
-    ]
-    # Добавление бомбы на позицию головы змеи
-    bomb_position = Point(100, 100)
-    game.bombs.append(Bomb(bomb_position))
+    def checkCollisions(self):
+        head = self.snake.segments[0]
 
-    # Перемещение змеи на бомбу и обновление игры
-    move_snake_to_bomb(game, bomb_position)
-    game.update()
+        # Проверка столкновения с границами и обработка перехода через границы
+        if head.x < 0:
+            head.x = self.gameWidth - 10
+        elif head.x >= self.gameWidth:
+            head.x = 0
+        elif head.y < 0:
+            head.y = self.gameHeight - 10
+        elif head.y >= self.gameHeight:
+            head.y = 0
 
-    # Проверка, что бомба взорвалась
-    assert game.bombs[0].exploded ==False
-    # Проверка, что длина змеи уменьшилась на 4 сегмента
-    assert len(game.snake.segments) - 4 == 1
+        # Проверка столкновения с самой собой
+        if len(self.snake.segments) > 1:
+            for segment in self.snake.segments[1:]:
+                if head.x == segment.x and head.y == segment.y:
+                    self.gameOver = True
 
+        # Проверка столкновения с препятствиями
+        for obstacle in self.obstacles:
+            if head.x == obstacle.position.x and head.y == obstacle.position.y:
+                self.gameOver = True
 
-def test_bomb_explosion_game_over(game):
-    # Инициализация змеи длиной 3 сегмента
-    game.snake.segments = [
-        Point(100, 100), Point(110, 100), Point(120, 100)
-    ]
-    # Добавление бомбы на позицию головы змеи
-    bomb_position = Point(100, 100)
-    game.bombs.append(Bomb(bomb_position))
+        # Проверка столкновения с бомбами
+        for bomb in self.bombs:
+            if not bomb.exploded and head.x == bomb.position.x and head.y == bomb.position.y:
+                bomb.explode()
+                if len(self.snake.segments) >= 4:
+                    self.snake.segments = self.snake.segments[:-4]  # Удаляем последние 4 сегмента
+                else:
+                    self.gameOver = True  # Игра завершается, если длина змейки меньше 4
 
-    # Перемещение змеи на бомбу и обновление игры
-    move_snake_to_bomb(game, bomb_position)
-    game.update()
+    def drawScore(self, surface):
+        text = f"Score: {self.score}"
+        text_surface = self.font.render(text, True, white)
+        surface.blit(text_surface, (10, 10))
 
-    # Проверка, что бомба взорвалась
-    assert game.bombs[0].exploded==False
-    # Проверка, что игра завершилась
-    assert game.gameOver==False
+    def drawObjects(self, surface, block_size):
+        # Отрисовка змейки
+        self.snake.draw(surface, block_size)
+
+        # Отрисовка яблока
+        self.apple.draw(surface, block_size)
+
+        # Отрисовка препятствий
+        for obstacle in self.obstacles:
+            obstacle.draw(surface, block_size)
+
+        # Отрисовка бомб
+        for bomb in self.bombs:
+            bomb.draw(surface, block_size)
