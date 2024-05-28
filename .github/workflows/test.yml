@@ -41,7 +41,7 @@ jobs:
           args: >
             -Dsonar.projectKey=Gygygnom_PO
             -Dsonar.organization=gygygnom
-            -Dsonar.sources=./PO
+            -Dsonar.sources=./
             -Dsonar.exclusions=**/*,./PO/**/*
             -Dsonar.tests=./
             -Dsonar.test.inclusions=**/test_game.py
