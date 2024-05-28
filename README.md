@@ -1,3 +1,8 @@
+[![CI/CD GitHub Actions](https://github.com/PO/.github/workflows/test.yml/badge.svg)](https://github.com/PO/.github/actions/workflows/test.yml)
+[![Coverage Status](https://coveralls.io/repos/github/Gygygnom/PO/badge.svg?branch=master)](https://coveralls.io/github/Gygygnom/PO?branch=master)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Gygygnom_PO&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Gygygnom_PO)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Gygygnom_PO&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Gygygnom_PO)
+
 ### Общее описание кода игры Snake на Python с использованием Pygame
 Этот код реализует классическую игру "Snake" с добавлением препятствий и бомб. Игра разработана на языке Python с использованием библиотеки Pygame для графики и обработки событий. Основные классы и их функциональность приведены ниже.
 
