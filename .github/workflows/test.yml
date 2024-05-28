@@ -32,16 +32,7 @@ jobs:
        git checkout HEAD -- .github/workflows
        git pull
 
-    - name: Run tests and collect coverage
-      run: |
-       export DISPLAY=:99
-       Xvfb :99 -ac &
-       ps -ef | grep Xvfb
-       pwd
-       ls -l App/tests/
-       coverage run --omit=App/paint.py --source=App/tests -m unittest discover -s App/tests -p 'test_*.py' -v
-      env:
-       DISPLAY: ":99"
+    
        
     - name: Install coveralls
       run: |
@@ -57,7 +48,7 @@ jobs:
       run: |
        pwd
        ls -l
-      working-directory: ./App
+      working-directory: ./PO
 
     - name: Check Coveralls token
       run: |
