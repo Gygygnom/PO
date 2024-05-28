@@ -52,6 +52,6 @@ jobs:
             -Dsonar.organization=gygygnom
             -Dsonar.sources=./PO
             -Dsonar.exclusions=**/*,./PO/**/*
-            -Dsonar.tests=./PO
+            -Dsonar.tests=./
             -Dsonar.test.inclusions=**/test_game.py
             -Dsonar.python.coverage.reportPaths=./coverage.xml
