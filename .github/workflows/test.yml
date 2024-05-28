@@ -1,69 +1,59 @@
-name: CI/CD GitHub Actions
+name: Python application
 
 on:
   push:
-    branches: [ master ]
+    branches:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
-    
+
+    strategy:
+      matrix:
+        python-version: [3.11]
+
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: 3.8
-        
-    - name: Install dependencies
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y python3-tk python3-dev
-        sudo apt-get install -y xvfb
-        python -m pip install --upgrade pip
-        pip install coverage
-        pip install pillow
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Invalidate cache
-      run: |
-       git checkout HEAD -- .github/workflows
-       git pull
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-    
-       
-    - name: Install coveralls
-      run: |
-        python -m pip install --upgrade pip
-        pip install coveralls
+      - name: Run tests
+        run: |
+          pytest --cov=. --cov-report=xml
 
-    - name: Upload coverage to Coveralls
-      env:
-       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      run: coveralls
+      - name: Upload coverage to Coveralls 
+        run: |
+          coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
-    - name: Check Coveralls token
-      run: |
-       echo "COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}"
+      - name: Install SonarScanner
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y openjdk-11-jre
+          curl -sSLo sonar-scanner-cli.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
+          unzip sonar-scanner-cli.zip
+          export PATH="$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin"
 
-    - name: Force update Coveralls badge
-      run: curl https://coveralls.io/webhook?repo_token=${{ secrets.COVERALLS_REPO_TOKEN }} -d "payload[status]=done"
-
-
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        
-      with:
-        args: >
-          -Dsonar.projectKey=Gygygnom_PO
-          -Dsonar.organization=gygygnom
-          -Dsonar.sources=.
-          -Dsonar.tests=.
-          -Dsonar.test.inclusions=**/test_*.py
-          -Dsonar.python.coverage.reportPaths=coverage.xml
-        
+      - name: SonarCloud Scan
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+          -Dsonar.projectKey=Gygygnom_PO \
+          -Dsonar.organization=gygygnom \
+          -Dsonar.sources=. \
+          -Dsonar.tests=. \
+          -Dsonar.test.inclusions=**/test_*.py \
+          -Dsonar.python.coverage.reportPaths=coverage.xml \
+          -Dsonar.host.url=https://sonarcloud.io \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
